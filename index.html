@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Workshop game</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+	<audio id="audio">
+		<source src="audio/1.mp3">
+	</audio>
+	<div id="video-bg">
+	    <video width="100%" height="auto" preload="auto"  autoplay="true" loop="true" muted="muted" poster="images/bg-poster.png">
+	        <source src="images/bg.mp4" type="video/mp4"></source>
+	        <source src="images/bg.webm" type="video/webm"></source>
+	    </video>
+	</div>
+
+	<div id="app">
+		<div id="game" class="hide-menu">
+			<div id="lifes"></div>
+
+			<div id="options">
+				<div id="score">
+					Score: <span>0</span>
+				</div>
+				<div id="sound">
+					<img src="images/mute_sound.png">
+				</div>
+			</div>
+
+			<div id="player" class="skin_1"></div>
+		</div>
+		
+
+		<div id="start">
+			<button id="song1">Song 1</button>
+			<button id="song2">Song 2</button>
+			<audio id="audio" controls style="display: none;">
+				<source src="audio/2.mp3">
+			</audio>
+			<h2>Выбери игрока</h2>
+			<div id="select-player" class="clearfix">
+				<span class="selected">
+					<img src="images/player_1.png">
+				</span>
+			
+				<span>
+					<img src="images/player_2.png">
+				</span>
+			</div>
+			<button id="start-btn">Start</button>
+		</div>
+
+	</div>
+
+	<script src="script.js"></script>
+
+</body>
+</html>
