@@ -1,6 +1,8 @@
+const windowApp = document.getElementById("app");
 const game = document.getElementById("game");
 const startMenu = document.getElementById("start");
 const start = document.getElementById("start-btn");
+const reStart = document.getElementById("reStart-btn");
 let countLifes = 5;
 
 start.style.backgroundColor = "green";
@@ -21,10 +23,6 @@ console.dir(audioSource);
 
 const songFirstButton = document.getElementById("song1");
 const songSecondButton = document.getElementById("song2");
-
-start.addEventListener("click", function(){
-    startGame();
-});
 
 songFirstButton.addEventListener("click", function(){
     audioSource.src = "./audio/1.mp3";
@@ -55,13 +53,13 @@ soundButton.addEventListener("click", () => {
 const character = document.getElementById("player");
 
 document.onkeydown = (event) => {
-    if (event.key == "w") {
+    if (event.key == "w" || event.key == "ц") {
         if (character.offsetTop < 30){   
             character.style.top = "5px";
         } else {
         character.style.top = character.offsetTop - 50 +"px";
         }
-    } else if (event.key == "s") {
+    } else if (event.key == "s" || event.key == "ы") {
         if (character.offsetTop > 530)
         character.style.top = "550px";
         else
@@ -73,31 +71,27 @@ document.onkeydown = (event) => {
     //Сделать создание пули при нажатии на пробел. Когда пуля долетает до конца поля удалять пулю и останавливать таймер пули
 };
 
-// const characterMoving = (event) => {
-//     if (event.key == "w") {
-//         character.style.top = character.offsetTop - 10 +"px";
-//     } else if (event.key == "s") {
-//     character.style.top = character.offsetTop + 10 +"px";
-//     console.log(event);
-//     } 
-// };
-
-// character.addEventListener("keydown", characterMoving);
-
 const startGame = () => {
     game.classList.toggle("hide-menu");
     startMenu.classList.toggle("hide-menu");
     createLifes();
     createEnemy();
     scoreCounter = 0;
+};
 
+start.addEventListener("click", startGame);
+
+const random = (min, max) => {
+    let rand = min - 0.5 + Math.random() * (max - min + 1);
+    return Math.round(rand);
 };
 
 const createEnemy = () => {
     let firstEnemy = document.createElement("div");
-    firstEnemy.className = "enemy type-1";
+    firstEnemy.className = "enemy " + typeEnemy();
+    firstEnemy.style.top = random(100, windowApp.clientHeight - 140) + "px";
     game.appendChild(firstEnemy);
-    
+
     moveEnemy(firstEnemy);
 
     // let secondEnemy = document.createElement("div");
@@ -105,6 +99,15 @@ const createEnemy = () => {
     // game.appendChild(secondEnemy);
 
     // moveEnemy(secondEnemy);
+};
+
+const typeEnemy = () => {
+    let type = random(1, 2);
+    if (type == 1) {
+        return "type-1";
+    } else {
+        return "type-2";
+    };
 };
 
 const moveEnemy = (enemy) => {
@@ -184,20 +187,24 @@ const createLifes = () => {
     };
 };
 
-
 const die = () => {
      countLifes -= 1;
     if (countLifes <= 0) {
-        alert("you lost");
-        game.classList.toggle("hide-menu");
-        startMenu.classList.toggle("hide-menu");
+        endGame();
         countLifes = 5;
     };
     createLifes();
 };
 
-/*
-Задание со ⭐️
-⭐️1. Сделать увеличение очков после убийства врага
-⭐️2. Создавать элемент взрыва на месте попадания пули по врагу, и через секунду уничтожать элемент взрыва
- */
+const endGame = () => {
+    //game.innerHTML = "";
+    const endGame = document.getElementById("end");
+    endGame.classList.toggle("hide-menu");
+    game.classList.toggle("hide-menu");
+    document.getElementById("end").children[1].children[0].textContent = scoreCounter;
+};
+
+reStart.addEventListener("click", function() {
+    location.reload();
+});
+
