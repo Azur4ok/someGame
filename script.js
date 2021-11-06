@@ -3,6 +3,9 @@ const game = document.getElementById("game");
 const startMenu = document.getElementById("start");
 const start = document.getElementById("start-btn");
 const reStart = document.getElementById("reStart-btn");
+const selectScin = document.getElementById("select-player");
+const selectedSkinFirst = document.getElementById("scin_1");
+const selectedSkinSecond = document.getElementById("scin_2");
 let countLifes = 5;
 
 start.style.backgroundColor = "green";
@@ -71,6 +74,21 @@ document.onkeydown = (event) => {
     //Сделать создание пули при нажатии на пробел. Когда пуля долетает до конца поля удалять пулю и останавливать таймер пули
 };
 
+selectScin.addEventListener("click", () => {
+    selectedSkinFirst.classList.toggle("selected");
+    if(character.classList.contains("skin_1"))
+        {
+            character.classList.add("skin_2");
+            character.classList.remove("skin_1");
+        } else {
+            character.classList.add("skin_1");
+            character.classList.remove("skin_2");
+        }
+
+    selectedSkinSecond.classList.toggle("selected");
+
+});
+
 const startGame = () => {
     game.classList.toggle("hide-menu");
     startMenu.classList.toggle("hide-menu");
@@ -112,7 +130,7 @@ const typeEnemy = () => {
 
 const moveEnemy = (enemy) => {
     let timerID = setInterval(function() {
-        enemy.style.left = enemy.offsetLeft - 10 + "px";
+        enemy.style.left = enemy.offsetLeft - 40 + "px";
         if (enemy.offsetLeft < -100) {
             enemy.remove(); 
             createEnemy();
